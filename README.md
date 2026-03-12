@@ -3,6 +3,7 @@
 Pure-Rust text embedding inference for local-first applications.
 
 [![CI](https://github.com/neuralforgeone/hypembed/actions/workflows/ci.yml/badge.svg)](https://github.com/neuralforgeone/hypembed/actions/workflows/ci.yml)
+[![crates.io](https://img.shields.io/crates/v/hypembed.svg)](https://crates.io/crates/hypembed)
 [![License: MIT OR Apache-2.0](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](./LICENSE-MIT)
 [![Docs](https://img.shields.io/badge/docs-github.io-black.svg)](https://neuralforgeone.github.io/hypembed/)
 

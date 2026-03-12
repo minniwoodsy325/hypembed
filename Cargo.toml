@@ -1,0 +1,22 @@
+[package]
+name = "hypembed"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.70"
+description = "A pure-Rust, local-first embedding inference library. No external ML runtimes."
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/tunay/hypembed"
+keywords = ["embeddings", "inference", "transformer", "nlp", "bert"]
+categories = ["science", "text-processing"]
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+
+[[bench]]
+name = "inference_bench"
+harness = false

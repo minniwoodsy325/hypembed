@@ -1,0 +1,15 @@
+/target
+Cargo.lock
+*.swp
+*.swo
+*~
+
+# Model weights (large files)
+models/
+*.safetensors
+*.bin
+*.ot
+TASKS.md
+ARCHITECTURE.md
+PRODUCT_SPEC.md
+ROADMAP.md

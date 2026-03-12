@@ -1,6 +1,6 @@
 [package]
 name = "hypembed"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2021"
 rust-version = "1.70"
 description = "Pure-Rust BERT-compatible text embedding inference for local-first applications."

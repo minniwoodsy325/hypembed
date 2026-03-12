@@ -12,16 +12,16 @@ use crate::tensor::layernorm;
 /// Compute embeddings for a batch of token sequences.
 ///
 /// # Arguments
-/// - `input_ids`: [batch_size, seq_len] integer token IDs
-/// - `token_type_ids`: [batch_size, seq_len] segment IDs (0 or 1)
-/// - `word_embeddings`: [vocab_size, hidden_size]
-/// - `position_embeddings`: [max_positions, hidden_size]
-/// - `token_type_embeddings`: [type_vocab_size, hidden_size] or None for models without (e.g., DistilBERT)
-/// - `ln_weight`, `ln_bias`: LayerNorm parameters [hidden_size]
+/// - `input_ids`: `[batch_size, seq_len]` integer token IDs
+/// - `token_type_ids`: `[batch_size, seq_len]` segment IDs (0 or 1)
+/// - `word_embeddings`: `[vocab_size, hidden_size]`
+/// - `position_embeddings`: `[max_positions, hidden_size]`
+/// - `token_type_embeddings`: `[type_vocab_size, hidden_size]` or `None` for models without them
+/// - `ln_weight`, `ln_bias`: LayerNorm parameters `[hidden_size]`
 /// - `eps`: LayerNorm epsilon
 ///
 /// # Returns
-/// Tensor of shape [batch_size, seq_len, hidden_size]
+/// Tensor of shape `[batch_size, seq_len, hidden_size]`
 pub fn compute_embeddings(
     input_ids: &[Vec<u32>],
     token_type_ids: &[Vec<u32>],

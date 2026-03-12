@@ -9,7 +9,7 @@
 /// Where:
 /// - mean and var are computed over the last dimension (per-token)
 /// - eps is a small constant (typically 1e-12) for numerical stability
-/// - gamma (scale) and beta (bias) are learnable parameters of shape [hidden_size]
+/// - `gamma` (scale) and `beta` (bias) are learnable parameters of shape `[hidden_size]`
 ///
 /// This is the standard pre-/post-layer normalization used in transformers.
 
@@ -19,9 +19,9 @@ use crate::tensor::Tensor;
 /// Apply layer normalization along the last dimension.
 ///
 /// # Arguments
-/// - `tensor`: Input tensor of shape [..., hidden_size]
-/// - `gamma`: Scale parameter of shape [hidden_size]
-/// - `beta`: Bias parameter of shape [hidden_size]
+/// - `tensor`: Input tensor of shape `[..., hidden_size]`
+/// - `gamma`: Scale parameter of shape `[hidden_size]`
+/// - `beta`: Bias parameter of shape `[hidden_size]`
 /// - `eps`: Small constant for numerical stability (typically 1e-12)
 pub fn layer_norm(tensor: &Tensor, gamma: &Tensor, beta: &Tensor, eps: f32) -> Result<Tensor> {
     let dims = tensor.shape().dims();

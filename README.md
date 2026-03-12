@@ -1,121 +1,119 @@
 # HypEmbed
 
-**A pure-Rust, local-first embedding inference library.**
+Pure-Rust text embedding inference for local-first applications.
 
-HypEmbed loads transformer model weights, tokenizes text, runs a complete forward pass, and returns normalized embedding vectors — all in safe Rust with **zero external ML runtime dependencies**.
+[![CI](https://github.com/tunay/hypembed/actions/workflows/ci.yml/badge.svg)](https://github.com/tunay/hypembed/actions/workflows/ci.yml)
+[![License: MIT OR Apache-2.0](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](./LICENSE-MIT)
+[![Docs](https://img.shields.io/badge/docs-github.io-black.svg)](https://tunay.github.io/hypembed/)
 
-## Features
+HypEmbed is a Rust library for generating BERT-compatible text embeddings without Python, ONNX Runtime, libtorch, or hosted inference services. Load local model weights, tokenize input, run the encoder, and get normalized vectors from a small API surface.
 
-- **Pure Rust** — No Python, ONNX, libtorch, or any external ML runtime
-- **Local-first** — All computation happens on-device
-- **Inference-only** — Optimized for embedding generation, not training
-- **Minimal dependencies** — Only `serde`, `serde_json`, `thiserror`
-- **Correctness-first** — Numerically stable softmax, layer norm, and normalization
-- **BERT-compatible** — Supports BERT-like encoder architectures (BERT, MiniLM, etc.)
+## Why HypEmbed
+
+- Pure Rust from tokenizer to encoder forward pass
+- Local-first inference with no external ML runtime dependency
+- BERT-family support for common embedding models such as MiniLM
+- Correctness-focused math with stable softmax, layer norm, and normalization
+- Performance-aware implementation with SIMD primitives, memory-mapped weights, and batch tokenization
+
+## Current Scope
+
+- Supports BERT-style encoder models, including BERT, MiniLM, and DistilBERT-style layouts
+- Loads `config.json`, `vocab.txt`, and `model.safetensors` from a local model directory
+- Offers mean pooling and CLS pooling
+- Accepts F32, F16, and BF16 weights, converting to `f32` for inference
+- Runs on CPU only
+
+HypEmbed does not currently handle training, quantization, GPU execution, or direct Hugging Face Hub downloads.
+
+## Installation
+
+```bash
+cargo add hypembed
+```
 
 ## Quick Start
 
 ```rust
 use hypembed::{Embedder, EmbeddingOptions, PoolingStrategy};
 
-// Load a model from a directory containing:
-//   config.json, vocab.txt, model.safetensors
 let model = Embedder::load("./model").unwrap();
 
 let options = EmbeddingOptions::default()
     .with_normalize(true)
     .with_pooling(PoolingStrategy::Mean);
 
-let embeddings = model.embed(&["hello world", "rust embeddings"], &options).unwrap();
+let embeddings = model
+    .embed(&["hello world", "rust embeddings"], &options)
+    .unwrap();
 
 println!("Embedding dim: {}", embeddings[0].len());
 println!("First 5 values: {:?}", &embeddings[0][..5]);
 ```
 
-## Supported Model Format
-
-HypEmbed loads models from a directory with three files:
-
-| File | Description |
-|------|-------------|
-| `config.json` | HuggingFace-format model configuration |
-| `vocab.txt` | BERT-format vocabulary (one token per line) |
-| `model.safetensors` | SafeTensors model weights (F32 or F16) |
-
-### Getting a Model
-
-Download a compatible model from HuggingFace:
+To try a complete example locally:
 
 ```bash
-# Example: all-MiniLM-L6-v2 (a popular sentence embedding model)
-# Download config.json, vocab.txt, and model.safetensors from:
-# https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2
+cargo run --example basic_embed -- ./path/to/model
 ```
 
-## Architecture
+## Model Directory
 
+HypEmbed expects a local directory with:
+
+| File | Description |
+| --- | --- |
+| `config.json` | Hugging Face style model configuration |
+| `vocab.txt` | BERT WordPiece vocabulary |
+| `model.safetensors` | SafeTensors weights |
+
+Example compatible model:
+
+- `sentence-transformers/all-MiniLM-L6-v2`
+
+## Documentation
+
+- Project site: https://tunay.github.io/hypembed/
+- API docs: https://tunay.github.io/hypembed/api/hypembed/
+- Architecture notes: [ARCHITECTURE.md](./ARCHITECTURE.md)
+- Product spec: [PRODUCT_SPEC.md](./PRODUCT_SPEC.md)
+- Roadmap: [ROADMAP.md](./ROADMAP.md)
+
+## Design Notes
+
+HypEmbed follows a simple pipeline:
+
+```text
+input text
+  -> pre-tokenize and normalize
+  -> WordPiece tokenize
+  -> add special tokens, truncate, and pad
+  -> embedding layer
+  -> encoder stack
+  -> mean or CLS pooling
+  -> optional L2 normalization
+  -> embedding vector
 ```
-Input text
-  → Pre-tokenize (lowercase, split whitespace/punctuation)
-  → WordPiece tokenize
-  → Add [CLS]/[SEP], truncate, pad
-  → Token + Position + Segment embeddings + LayerNorm
-  → N × Encoder layers (Self-Attention → Residual+LN → FFN → Residual+LN)
-  → Pooling (Mean or CLS)
-  → L2 Normalization (optional)
-  → Embedding vector
-```
 
-## Pooling Strategies
+The project favors explicit behavior and stable numerics:
 
-| Strategy | Description |
-|----------|-------------|
-| `Mean` | Average of non-padding token hidden states (recommended for sentence embeddings) |
-| `Cls` | Hidden state at position 0 ([CLS] token) |
+- softmax subtracts the row maximum before exponentiation
+- layer norm uses epsilon guards
+- pooling and vector normalization avoid divide-by-zero edge cases
+- typed errors keep load and inference failures inspectable
 
-## Numerical Stability
+## Open Source Status
 
-| Operation | Stability Measure |
-|-----------|-------------------|
-| Softmax | Subtract max before exp (prevents overflow) |
-| LayerNorm | Epsilon (1e-12) in denominator |
-| L2 Norm | `max(norm, 1e-12)` (handles zero vectors) |
-| Mean Pool | `max(token_count, 1e-9)` (handles empty sequences) |
-| Attention | Add -10000 to masked positions before softmax |
+HypEmbed is early-stage but already includes:
 
-## Performance
-
-The library is designed for correctness-first with performance in mind:
-
-- **Cache-friendly matmul** — ikj loop ordering for row-major data
-- **Contiguous storage** — All tensors use flat `Vec<f32>` with row-major layout
-- **Preallocated buffers** — No unnecessary allocations in hot paths
-- **Batched inference** — Process multiple texts in a single forward pass
-
-### Future optimizations (not yet implemented):
-- SIMD vectorization for matmul and element-wise ops
-- Thread-parallel batch processing via `rayon`
-- Memory-mapped weight loading via `memmap2`
-
-## Limitations
-
-- **CPU only** — No GPU support in v0.1
-- **BERT-like models only** — GPT, T5, and other architectures are not supported
-- **No quantization** — F32 inference only (F16 weights auto-convert to F32)
-- **No training** — Inference only
-- **No HuggingFace Hub** — Models must be downloaded manually
-
-## Project Structure
-
-```
-src/
-├── tensor/          # Minimal tensor engine (shape, matmul, softmax, GELU, LayerNorm, L2)
-├── tokenizer/       # BERT-compatible tokenizer (vocab, WordPiece, encoding)
-├── model/           # BERT encoder (config, SafeTensors, attention, FFN, pooling)
-├── pipeline/        # High-level Embedder API
-└── error/           # Typed error handling
-```
+- cross-platform CI
+- benchmark compilation checks
+- generated API documentation
+- architecture and roadmap notes in-repo
 
 ## License
 
-MIT OR Apache-2.0
+Licensed under either of:
+
+- Apache License, Version 2.0, see [LICENSE-APACHE](./LICENSE-APACHE)
+- MIT license, see [LICENSE-MIT](./LICENSE-MIT)

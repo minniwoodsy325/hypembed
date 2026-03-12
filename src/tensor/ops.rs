@@ -21,8 +21,8 @@ pub fn add(a: &Tensor, b: &Tensor) -> Result<Tensor> {
 
 /// Add a 1D bias to the last dimension of a tensor.
 ///
-/// For tensor of shape [A, B, ..., N] and bias of shape [N],
-/// adds bias to each row of the last dimension.
+/// For a tensor of shape `[A, B, ..., N]` and a bias of shape `[N]`,
+/// adds the bias to each row of the last dimension.
 pub fn add_bias(tensor: &Tensor, bias: &Tensor) -> Result<Tensor> {
     if bias.rank() != 1 {
         return Err(HypEmbedError::Tensor(format!(
@@ -80,7 +80,7 @@ pub fn scalar_add(tensor: &Tensor, scalar: f32) -> Tensor {
 
 /// Element-wise addition with broadcasting on the last dimensions.
 ///
-/// Supports broadcasting a tensor of shape [1, 1, N] or [N] onto [B, S, N].
+/// Supports broadcasting a tensor of shape `[1, 1, N]` or `[N]` onto `[B, S, N]`.
 /// The `mask` tensor is broadcast-expanded along dimensions of size 1.
 pub fn add_broadcast(a: &Tensor, b: &Tensor) -> Result<Tensor> {
     // Simple broadcast: b has fewer dims or has 1s that get expanded
@@ -139,7 +139,7 @@ pub fn add_broadcast(a: &Tensor, b: &Tensor) -> Result<Tensor> {
     Tensor::from_vec(data, a.shape().clone())
 }
 
-/// Multiply a tensor [B, S, H] element-wise with tensor [B, S, 1],
+/// Multiply a tensor `[B, S, H]` element-wise with a tensor `[B, S, 1]`,
 /// broadcasting the last dimension.
 ///
 /// This is used for applying attention masks in mean pooling.

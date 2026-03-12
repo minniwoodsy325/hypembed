@@ -3,17 +3,17 @@
 /// Implements 2D matmul and batched matmul needed for transformer inference.
 
 use crate::error::{HypEmbedError, Result};
-use crate::tensor::{Tensor, Shape};
+use crate::tensor::{Shape, Tensor};
 use crate::tensor::simd;
 
-/// 2D matrix multiplication: C = A @ B
+/// 2D matrix multiplication: `C = A @ B`
 ///
-/// A: [M, K], B: [K, N] → C: [M, N]
+/// `A: [M, K]`, `B: [K, N]` -> `C: [M, N]`
 ///
-/// Uses cache-friendly ikj loop ordering to improve data locality:
-/// for each row i of A, for each element k in the inner dimension,
-/// we scatter A[i,k] across the output row by iterating j.
-/// This accesses B row-by-row (contiguous in memory).
+/// Uses cache-friendly `ikj` loop ordering to improve data locality:
+/// for each row `i` of `A`, for each element `k` in the inner dimension,
+/// we scatter `A[i, k]` across the output row by iterating `j`.
+/// This accesses `B` row-by-row (contiguous in memory).
 pub fn matmul(a: &Tensor, b: &Tensor) -> Result<Tensor> {
     if a.rank() != 2 || b.rank() != 2 {
         return Err(HypEmbedError::Tensor(format!(
@@ -57,7 +57,7 @@ pub fn matmul(a: &Tensor, b: &Tensor) -> Result<Tensor> {
 
 /// Batched matrix multiplication for attention computation.
 ///
-/// A: [B, M, K], B: [B, K, N] → C: [B, M, N]
+/// `A: [B, M, K]`, `B: [B, K, N]` -> `C: [B, M, N]`
 ///
 /// Applies independent matmul for each batch element.
 pub fn batched_matmul(a: &Tensor, b: &Tensor) -> Result<Tensor> {

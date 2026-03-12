@@ -28,7 +28,7 @@ use crate::model::pool::{self, PoolingStrategy};
 /// Options for embedding generation.
 #[derive(Debug, Clone)]
 pub struct EmbeddingOptions {
-    /// Maximum sequence length (including [CLS] and [SEP]).
+    /// Maximum sequence length (including `[CLS]` and `[SEP]`).
     /// Default: 128
     pub max_length: usize,
     /// Pooling strategy. Default: Mean

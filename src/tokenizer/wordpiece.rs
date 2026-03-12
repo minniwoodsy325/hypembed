@@ -9,7 +9,7 @@
 /// For each word:
 /// 1. Try to match the longest prefix in the vocabulary
 /// 2. If a match is found, consume it and continue with `##` prefix for the remainder
-/// 3. If no match is found for any prefix, the entire word maps to [UNK]
+/// 3. If no match is found for any prefix, the entire word maps to `[UNK]`
 ///
 /// This matches the original BERT WordPiece implementation.
 
@@ -20,8 +20,8 @@ const MAX_WORD_LEN: usize = 200;
 
 /// Tokenize a single word into WordPiece tokens.
 ///
-/// Returns a vector of subword token strings (e.g., ["un", "##aff", "##able"]).
-/// If the word cannot be tokenized, returns ["[UNK]"].
+/// Returns a vector of subword token strings such as `["un", "##aff", "##able"]`.
+/// If the word cannot be tokenized, returns `["[UNK]"]`.
 pub fn wordpiece_tokenize(word: &str, vocab: &Vocab) -> Vec<String> {
     if word.is_empty() {
         return vec![];

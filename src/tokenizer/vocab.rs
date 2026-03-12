@@ -77,22 +77,22 @@ impl Vocab {
         self.token_to_id.contains_key(token)
     }
 
-    /// Get the ID of the [UNK] token.
+    /// Get the ID of the `[UNK]` token.
     pub fn unk_id(&self) -> u32 {
         self.token_to_id[UNK_TOKEN]
     }
 
-    /// Get the ID of the [CLS] token.
+    /// Get the ID of the `[CLS]` token.
     pub fn cls_id(&self) -> u32 {
         self.token_to_id[CLS_TOKEN]
     }
 
-    /// Get the ID of the [SEP] token.
+    /// Get the ID of the `[SEP]` token.
     pub fn sep_id(&self) -> u32 {
         self.token_to_id[SEP_TOKEN]
     }
 
-    /// Get the ID of the [PAD] token.
+    /// Get the ID of the `[PAD]` token.
     pub fn pad_id(&self) -> u32 {
         self.token_to_id[PAD_TOKEN]
     }

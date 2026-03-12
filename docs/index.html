@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HypEmbed | Pure-Rust Text Embeddings</title>
+    <meta
+      name="description"
+      content="HypEmbed is a pure-Rust, local-first text embedding library for BERT-compatible models."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="eyebrow">Rust library - local-first inference</div>
+        <h1>Text embeddings without Python or external runtimes.</h1>
+        <p class="lede">
+          HypEmbed loads local BERT-family weights, tokenizes text, runs the full
+          encoder stack in Rust, and returns vectors ready for search, retrieval,
+          and ranking pipelines.
+        </p>
+        <div class="actions">
+          <a class="button button-primary" href="./api/hypembed/">Open API Docs</a>
+          <a class="button button-secondary" href="https://github.com/tunay/hypembed">View on GitHub</a>
+        </div>
+        <div class="install-card">
+          <span>Install</span>
+          <code>cargo add hypembed</code>
+        </div>
+      </header>
+
+      <main>
+        <section class="grid two-up">
+          <article class="panel">
+            <h2>Why HypEmbed</h2>
+            <ul>
+              <li>Pure-Rust inference from tokenizer to pooling layer</li>
+              <li>No Python, ONNX Runtime, libtorch, or hosted API dependency</li>
+              <li>Supports BERT-style encoder models such as MiniLM and DistilBERT</li>
+              <li>Stable numerics, typed errors, and a compact public API</li>
+            </ul>
+          </article>
+
+          <article class="panel">
+            <h2>Current Scope</h2>
+            <ul>
+              <li>Load local `config.json`, `vocab.txt`, and `model.safetensors`</li>
+              <li>Mean pooling and CLS pooling</li>
+              <li>F32, F16, and BF16 weights converted to `f32` for inference</li>
+              <li>CPU-only execution today</li>
+            </ul>
+          </article>
+        </section>
+
+        <section class="panel code-panel">
+          <div class="section-label">Quick start</div>
+          <pre><code>use hypembed::{Embedder, EmbeddingOptions, PoolingStrategy};
+
+let model = Embedder::load("./model")?;
+
+let options = EmbeddingOptions::default()
+    .with_pooling(PoolingStrategy::Mean)
+    .with_normalize(true);
+
+let embeddings = model.embed(
+    &["hello world", "rust embeddings"],
+    &options,
+)?;</code></pre>
+        </section>
+
+        <section class="grid links-grid">
+          <a class="link-card" href="https://github.com/tunay/hypembed/blob/main/README.md">
+            <span class="link-kicker">Start here</span>
+            <strong>README</strong>
+            <p>Overview, installation, and model directory conventions.</p>
+          </a>
+          <a class="link-card" href="https://github.com/tunay/hypembed/blob/main/ARCHITECTURE.md">
+            <span class="link-kicker">Internals</span>
+            <strong>Architecture</strong>
+            <p>Tensor engine, tokenizer, model layout, and execution pipeline.</p>
+          </a>
+          <a class="link-card" href="https://github.com/tunay/hypembed/blob/main/ROADMAP.md">
+            <span class="link-kicker">Direction</span>
+            <strong>Roadmap</strong>
+            <p>Near-term performance work and longer-term model support plans.</p>
+          </a>
+          <a class="link-card" href="./api/hypembed/">
+            <span class="link-kicker">Reference</span>
+            <strong>API Docs</strong>
+            <p>Generated Rust API documentation published with every push.</p>
+          </a>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

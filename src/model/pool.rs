@@ -11,7 +11,7 @@
 ///
 /// ## CLS Pooling
 ///
-/// Simply takes the hidden state at position 0 (the [CLS] token).
+/// Simply takes the hidden state at position 0 (the `[CLS]` token).
 
 use crate::error::Result;
 use crate::tensor::{Tensor, Shape};
@@ -21,19 +21,19 @@ use crate::tensor::{Tensor, Shape};
 pub enum PoolingStrategy {
     /// Mean pooling over non-padding tokens.
     Mean,
-    /// Use the [CLS] token (position 0) embedding.
+    /// Use the `[CLS]` token (position 0) embedding.
     Cls,
 }
 
 /// Apply pooling to hidden states.
 ///
 /// # Arguments
-/// - `hidden`: [batch, seq, hidden_size]
-/// - `attention_mask`: [batch, seq] with 1=real, 0=padding
+/// - `hidden`: `[batch, seq, hidden_size]`
+/// - `attention_mask`: `[batch, seq]` with `1 = real` and `0 = padding`
 /// - `strategy`: Which pooling to use
 ///
 /// # Returns
-/// Pooled tensor [batch, hidden_size]
+/// Pooled tensor `[batch, hidden_size]`
 pub fn pool(
     hidden: &Tensor,
     attention_mask: &[Vec<u32>],

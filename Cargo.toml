@@ -3,9 +3,12 @@ name = "hypembed"
 version = "0.2.0"
 edition = "2021"
 rust-version = "1.70"
-description = "A pure-Rust, local-first embedding inference library. No external ML runtimes."
+description = "Pure-Rust BERT-compatible text embedding inference for local-first applications."
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/tunay/hypembed"
+homepage = "https://tunay.github.io/hypembed/"
+documentation = "https://tunay.github.io/hypembed/api/hypembed/"
+readme = "README.md"
 keywords = ["embeddings", "inference", "transformer", "nlp", "bert"]
 categories = ["science", "text-processing"]
 

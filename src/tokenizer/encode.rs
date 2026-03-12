@@ -5,9 +5,9 @@
 
 use std::path::Path;
 use crate::error::{HypEmbedError, Result};
+use crate::tokenizer::pre_tokenize;
 use crate::tokenizer::vocab::Vocab;
 use crate::tokenizer::wordpiece;
-use crate::tokenizer::pre_tokenize;
 use rayon::prelude::*;
 
 /// The output of tokenizing a single text.
@@ -55,7 +55,7 @@ impl Tokenizer {
 
     /// Tokenize and encode a single text.
     ///
-    /// Pipeline: text → pre-tokenize → WordPiece → add [CLS]/[SEP] → truncate → pad
+    /// Pipeline: text -> pre-tokenize -> WordPiece -> add `[CLS]` and `[SEP]` -> truncate -> pad
     ///
     /// # Arguments
     /// - `text`: Input text

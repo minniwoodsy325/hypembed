@@ -9,7 +9,7 @@
 
 /// Add scaled source to destination: `dst[i] += src[i] * scale`
 ///
-/// This is the matmul inner loop: scatter A[i,k] across the output row.
+/// This is the matmul inner loop: scatter `A[i, k]` across the output row.
 #[inline]
 pub fn add_assign_scaled(dst: &mut [f32], src: &[f32], scale: f32) {
     debug_assert_eq!(dst.len(), src.len());

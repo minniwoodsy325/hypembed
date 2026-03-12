@@ -1,7 +1,7 @@
 /// Tensor shape representation.
 ///
 /// A `Shape` describes the dimensions of a tensor in row-major order.
-/// For example, a shape [2, 3, 4] represents a 3D tensor where:
+/// For example, a shape `[2, 3, 4]` represents a 3D tensor where:
 /// - dim 0 has size 2
 /// - dim 1 has size 3
 /// - dim 2 has size 4
@@ -58,8 +58,8 @@ impl Shape {
 
     /// Compute row-major strides.
     ///
-    /// For shape [2, 3, 4], strides are [12, 4, 1].
-    /// stride[i] = product of dims[i+1..].
+    /// For shape `[2, 3, 4]`, strides are `[12, 4, 1]`.
+    /// `stride[i] = product of dims[i+1..]`.
     pub fn strides(&self) -> Vec<usize> {
         let rank = self.dims.len();
         if rank == 0 {

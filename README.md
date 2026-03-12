@@ -2,9 +2,9 @@
 
 Pure-Rust text embedding inference for local-first applications.
 
-[![CI](https://github.com/tunay/hypembed/actions/workflows/ci.yml/badge.svg)](https://github.com/tunay/hypembed/actions/workflows/ci.yml)
+[![CI](https://github.com/neuralforgeone/hypembed/actions/workflows/ci.yml/badge.svg)](https://github.com/neuralforgeone/hypembed/actions/workflows/ci.yml)
 [![License: MIT OR Apache-2.0](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](./LICENSE-MIT)
-[![Docs](https://img.shields.io/badge/docs-github.io-black.svg)](https://tunay.github.io/hypembed/)
+[![Docs](https://img.shields.io/badge/docs-github.io-black.svg)](https://neuralforgeone.github.io/hypembed/)
 
 HypEmbed is a Rust library for generating BERT-compatible text embeddings without Python, ONNX Runtime, libtorch, or hosted inference services. Load local model weights, tokenize input, run the encoder, and get normalized vectors from a small API surface.
 
@@ -73,8 +73,8 @@ Example compatible model:
 
 ## Documentation
 
-- Project site: https://tunay.github.io/hypembed/
-- API docs: https://tunay.github.io/hypembed/api/hypembed/
+- Project site: https://neuralforgeone.github.io/hypembed/
+- API docs: https://neuralforgeone.github.io/hypembed/api/hypembed/
 - Architecture notes: [ARCHITECTURE.md](./ARCHITECTURE.md)
 - Product spec: [PRODUCT_SPEC.md](./PRODUCT_SPEC.md)
 - Roadmap: [ROADMAP.md](./ROADMAP.md)

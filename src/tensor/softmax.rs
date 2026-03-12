@@ -61,6 +61,7 @@ pub fn softmax(tensor: &Tensor) -> Result<Tensor> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::tensor::Shape;
 
     #[test]
     fn test_softmax_basic() {

@@ -7,7 +7,6 @@
 
 use crate::error::Result;
 use crate::tensor::{Tensor, Shape};
-use crate::tensor::ops;
 use crate::tensor::layernorm;
 
 /// Compute embeddings for a batch of token sequences.

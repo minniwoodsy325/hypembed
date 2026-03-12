@@ -55,6 +55,7 @@ pub fn l2_normalize(tensor: &Tensor, eps: f32) -> Result<Tensor> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::tensor::Shape;
 
     #[test]
     fn test_l2_normalize_basic() {

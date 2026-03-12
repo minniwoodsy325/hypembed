@@ -150,6 +150,6 @@ mod tests {
         let s = Shape::scalar();
         assert_eq!(s.rank(), 0);
         assert_eq!(s.numel(), 1);
-        assert_eq!(s.strides(), vec![]);
+        assert_eq!(s.strides(), Vec::<usize>::new());
     }
 }

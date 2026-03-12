@@ -70,7 +70,6 @@ pub fn wordpiece_tokenize<'a>(word: &str, vocab: &'a Vocab) -> Vec<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::collections::HashMap;
 
     /// Create a small test vocabulary.
     fn make_test_vocab() -> Vocab {

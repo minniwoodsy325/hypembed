@@ -79,6 +79,7 @@ pub fn layer_norm(tensor: &Tensor, gamma: &Tensor, beta: &Tensor, eps: f32) -> R
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::tensor::Shape;
 
     #[test]
     fn test_layer_norm_basic() {

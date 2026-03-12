@@ -42,7 +42,6 @@ pub fn feed_forward(hidden: &Tensor, weights: &FeedForwardWeights) -> Result<Ten
 
     // Output: intermediate @ W2^T + b2
     let w2_t = weights.output_weight.transpose_2d()?;
-    let inter_size = intermediate.shape().dim(1)?;
     let output = ops::add_bias(
         &matmul::matmul(&intermediate, &w2_t)?,
         &weights.output_bias,

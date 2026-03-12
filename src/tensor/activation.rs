@@ -66,9 +66,17 @@ mod tests {
         let t = Tensor::from_vec(vec![-2.0, -1.0, 0.0, 1.0, 2.0], Shape::new(vec![5])).unwrap();
         let g = gelu(&t);
         let data = g.data();
-        // GELU is monotonically increasing
-        for i in 0..4 {
-            assert!(data[i] < data[i + 1], "GELU should be increasing: {} >= {}", data[i], data[i+1]);
-        }
+        // GELU(0) ≈ 0
+        assert!(data[2].abs() < 1e-6);
+        // GELU is positive for positive inputs
+        assert!(data[3] > 0.0);
+        assert!(data[4] > 0.0);
+        // GELU(x) < x for positive x
+        assert!(data[3] < 1.0);
+        assert!(data[4] < 2.0);
+        // GELU(-2) > GELU(-1) is NOT guaranteed (GELU has a trough)
+        // Instead verify GELU is negative for negative inputs
+        assert!(data[0] < 0.0);
+        assert!(data[1] < 0.0);
     }
 }

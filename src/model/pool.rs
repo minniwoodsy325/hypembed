@@ -13,7 +13,7 @@
 ///
 /// Simply takes the hidden state at position 0 (the [CLS] token).
 
-use crate::error::{HypEmbedError, Result};
+use crate::error::Result;
 use crate::tensor::{Tensor, Shape};
 
 /// Pooling strategy for combining token embeddings into a sentence embedding.

